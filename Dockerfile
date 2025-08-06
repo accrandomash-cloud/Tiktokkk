@@ -18,5 +18,7 @@ COPY . .
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
 
+EXPOSE 5000
+
 # Run the application
 CMD ["python", "app.py"]

@@ -1,5 +1,5 @@
 # Required imports
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, jsonify, render_template
 import os
 import subprocess
 import re
@@ -142,7 +142,16 @@ def process_video(story_text, youtube_urls):
         clean_temp_files(temp_paths)
         raise Exception(f"Video processing failed: {str(e)}")
 
+@app.route('/')
+def index():
+    return render_template('index.html')
+
 # API Endpoints
+@app.route('/api/config')
+def get_config():
+    api_key = os.environ.get("OPENROUTER_API_KEY", "")
+    return jsonify({"openRouterApiKey": api_key})
+
 @app.route('/api/video', methods=['POST'])
 def generate_video():
     try:
